@@ -14,9 +14,10 @@ button组件要注意链接处的边框和圆角处理 学会使用hover z-index
 ![click](./3.png)
 
 
-处理组件使用的极端情况:
+处理`button-group`组件使用的极端情况:
 判断插槽内容的合法性
 ![click](./4.png)
-
+![click](./5.png)
+![click](./6.png)
 
 #### 明日学习内容： 单元测试
