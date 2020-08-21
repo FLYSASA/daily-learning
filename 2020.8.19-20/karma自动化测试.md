@@ -6,13 +6,15 @@
 
 
 ### 步骤
-1. 安装各种工具
+#### 1. 安装各种工具
 ```
 npm i -D karma karma-chrome-launcher karma-mocha karma-sinon-chai mocha sinon sinon-chai karma-chai karma-chai-spies
 ```
-2. 创建karma.conf.js文件，如下
+#### 2. 创建`karma.conf.js`文件，如下
+这个文件有两种创建方法：
+
+一：手动新建 karma.conf.js，内容如下
 ```
-// 新建 karma.conf.js，内容如下
  module.exports = function (config) {
      config.set({
 
@@ -83,7 +85,18 @@ npm i -D karma karma-chrome-launcher karma-mocha karma-sinon-chai mocha sinon si
     }
 ```
 
-3.  将所有的测试用例放在test文件下， 例：创建 `test/button.test.js`  文件
+二. 使用karma-cli自动生成
+```
+npm i karma -g
+npm i karma-cli -D
+karma init 
+```
+选项如下：
+![4](./4.png)
+
+**以上两种方式都可以，但是要注意的是手动创建的时候千万不要写错文件名`karma.conf.js` 别少个f啥的，否则到时候karma start并不会报错，但是浏览器不会正常启动，无法自动检测，这个吐血bug一度让我重装了git和node，特别坑。**
+
+#### 3.  将所有的测试用例放在test文件下， 例：创建 `test/button.test.js`  文件
 ```
  const expect = chai.expect;
  import Vue from 'vue'
@@ -166,7 +179,7 @@ npm i -D karma karma-chrome-launcher karma-mocha karma-sinon-chai mocha sinon si
  })
 ```
 
-4. 创建测试脚本
+#### 4. 创建测试脚本
 在 package.json 里面找到 scripts 并改写 scripts
 ```
  "scripts": {
@@ -178,6 +191,6 @@ npm i -D karma karma-chrome-launcher karma-mocha karma-sinon-chai mocha sinon si
 ![](./1.png)
 
 
-5. 运行测试脚本
+#### 5. 运行测试脚本
 - 要么使用`npm run test` 一次性运行，看一次结果
-- 要么使用 `npm run dev-test` 进行watch运行, 新开命令行窗口可以实时看到测试结果
+- 要么使用 `npm run dev-test` 进行watch运行, 新开命令行窗口可以实时看到测试结果, 这个指令在windows下需要拆开执行
