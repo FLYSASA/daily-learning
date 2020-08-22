@@ -192,5 +192,6 @@ karma init
 
 
 #### 5. 运行测试脚本
-- 要么使用`npm run test` 一次性运行，看一次结果
+- 要么使用`npm run test` 一次性运行，看一次结果. 可以直接 `npm test`
+
 - 要么使用 `npm run dev-test` 进行watch运行, 新开命令行窗口可以实时看到测试结果, 这个指令在windows下需要拆开执行
