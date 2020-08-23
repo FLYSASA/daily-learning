@@ -1,11 +1,11 @@
 ### npm 发布包
 
-#### 1. 上传代码到 apmjs.org
+#### 1. 上传代码到 npmjs.org
 
 - ###### 创建 `index.js` 文件
 在这个文件中将想要的导出的内容导出
 ![6](./6.png)
-package.json 入口
+package.json 入口指向导出的文件
 ![7](./7.png)
 
 
@@ -33,7 +33,7 @@ package.json 入口
 ![8](./11.png)
 
 #### 3. 构建完成后，开始安装我们的包
-`npm i koma-ui -D`
+`npm i koma-ui`
 
 #### 4. 在项目man.js里引入 组件
 会发现报错：
