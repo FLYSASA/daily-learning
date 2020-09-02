@@ -18,3 +18,8 @@ v-model其实相当于：
 1. :value="value"  绑定value
 
 2. 监听 input 事件
+![4](./4.png)
+
+
+### 完善input组件的测试用例
+![3](./3.png)

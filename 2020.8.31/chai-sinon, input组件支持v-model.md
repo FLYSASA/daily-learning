@@ -10,3 +10,8 @@
 
 `sinon.fake()` 由sinon提供， `expect`语法由chai提供， `calledWith`由 sinon-chai 提供
 ![2](2.png)
+
+
+### 测试用例打印样式？
+![3](3.png)
+
