@@ -44,3 +44,18 @@ tabs使用场景是，点击一个item会通知其他组件自身状态的更新
 ![5](./6.在slot上加class是无效的.png)
 
 给个 `margin-left: auto;` 即可
+
+### 6. 如何获取相对parent元素的偏移值？
+当使用getBoundingClientRect只能获取到相对视窗的left偏移值，但是难免会包裹一层含padding的容器。
+![6](./7.关于getBoundingClientRect的坑.png)
+
+因为在 `tabs-head`上给了`position: relative;`,所以为了让里面的line定位使用了，`position: absolute;` ，所以我们只要拿到`tabs-item`相对parent的偏移值即可。
+
+![6](./7.关于getBoundingClientRect的坑2.png)
+
+### 7. 添加line的动画
+将line独立出来的好处就是可以更方便的添加动画
+![6](./8.添加line的动画2.png)
+![6](./8.添加line的动画.png)
+
+因为line有left的值和width的值的变化，可以给这两个属性单独动画。
