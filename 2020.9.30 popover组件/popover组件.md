@@ -1,6 +1,8 @@
 # popover组件
 
-## 1.实现popover组件的时候，要实现一个小功能：
+## 1. 实现简单版popover
+
+实现popover组件的时候，要实现一个小功能：
 ![1](./1监听事件关闭popover.png)
 
 ```
@@ -74,3 +76,13 @@ click(){
 
 ## 2. 实现点击popover时不关闭
 ![2](./2阻止冒泡.png)
+
+
+### 简单版的弊端:
+
+当给父容器加一个div并设置 `overflow: hidden;`时，popover会被遮挡。
+![2](./3简单版的弊端.png)
+
+
+## 3. 重构popover
+
