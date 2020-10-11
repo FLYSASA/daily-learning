@@ -92,3 +92,43 @@ click(){
 
 ## 3. 重构popover
 
+**核心思路：不能再将content放置在popover下，而是将其直接挂载到body下，避免overflow: hidden；的影响**
+
+初步实现：
+```
+// html: 
+<template>
+  <div class="popover" @click.stop="click">
+    <div ref="content" class="content-wrapper" v-show="visible">
+      <slot name="content"></slot>
+    </div>
+    <span ref="triggerWrapper">
+      <slot></slot>
+    </span>
+  </div>
+</template>
+
+// css
+<style lang='less' scoped>
+  .popover {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+  }
+  .content-wrapper {
+    position: absolute;
+    border: 1px solid green;
+    box-shadow: 0 0 3px rgba(0,0,0,0.5);
+    transform: translateY(-100%)
+  }
+</style>
+```
+// js
+![2](./4初步重构popover.png)
+
+
+存在样式bug
+![2](./5定位popoverbug.png)
+
+
+
