@@ -131,4 +131,42 @@ click(){
 ![2](./5定位popoverbug.png)
 
 
+最终解决方案：
+![3](./4重构.png)
+
+
+样式问题：
+![3](./6popover样式.png)
+
+![3](./6popover样式没有阴影.png)
+
+解决小三角没有阴影的问题：
+
+`但是这个filter: drop-shadow()兼容性可能有问题：`
+![3](./7解决popover样式没有阴影.png)
+
+
+## 4. 让popover支持position
+html:
+![3](./8popover支持position.png)
+
+css:
+![3](./8popover支持position2.png)
+
+js: 
+![3](./8popover支持position3.png)
+
+位置left时，纵向居中对齐
+![3](./8popover支持position4.png)
+
+
+## 5. 让popover支持click和hover触发
+**记得在destroyed时手动删掉监听器**
+![3](./9popover支持click和hover.png)
+
+
+## 6. 通过插槽触发子组件的close方法
+![10](./10父组件通过插槽触发popover的close方法.png)
+![10](./10父组件通过插槽触发popover的close方法2.png)
+![10](./10父组件通过插槽触发popover的close方法3.png)
 
