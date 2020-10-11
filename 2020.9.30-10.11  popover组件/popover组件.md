@@ -141,6 +141,7 @@ click(){
 ![3](./6popover样式没有阴影.png)
 
 解决小三角没有阴影的问题：
+记得还要加上background
 
 `但是这个filter: drop-shadow()兼容性可能有问题：`
 ![3](./7解决popover样式没有阴影.png)
