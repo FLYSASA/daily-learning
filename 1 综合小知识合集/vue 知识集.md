@@ -1,4 +1,4 @@
-s### 1. 如何判断dom元素内部的子元素标签？
+### 1. 如何判断dom元素内部的子元素标签？
 ```
 <div class="parent" ref="parent">
   <span class="child">儿子</span>
@@ -137,6 +137,18 @@ props: {
 </div>
 ```
 
+### 5. 组件prop传递规则
+我们给一个组件定义prop时：
+![3prop](3prop规则.png)
+
+在父组件中:
+![3prop](3prop规则2.png)
+
+**如果父组件中使用 `popoverClassName`传递prop, 在子组件中将会是`undefined`**
+
+这是因为在html中 attribute 的名是大小写不敏感的，所以浏览器会把所有大写字符解释为小写字符。
+
+![3prop](3prop规则3.png)
 
 
 
