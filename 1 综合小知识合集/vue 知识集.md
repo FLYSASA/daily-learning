@@ -151,5 +151,16 @@ props: {
 ![3prop](3prop规则3.png)
 
 
+### 6. 自定义指令
+**指令就是为了操纵dom的。**
+
+[自定义指令案例](https://jsbin.com/geboqabuye/edit?html,js,console,output)
+
+![](7vue自定义指令.png)
+
+如果给指令传入函数，直接 `binding.value()` 就能执行该函数，`binding.value`即绑定的值。
+
+
+
 
 
