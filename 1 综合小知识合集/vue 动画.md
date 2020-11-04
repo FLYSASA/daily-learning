@@ -56,10 +56,73 @@ new Vue({
 ![](./动画/vue动画6.png)
 
 
-### 4. 动画方式4-多元素动画
+### 4. 动画方式4-多元素过渡动画
 [测试案例](http://js.jirengu.com/juzemutoro/1/edit?html,css,js,output)
 
 同标签key的重要性：
 ![](./动画/vue动画7.png)
  两种过渡模式：
 ![](./动画/vue动画8.png)
+
+
+### 5. 动画方式5-多组件过渡动画
+
+[测试案例](https://jsbin.com/xeyemahihe/1/edit?html,css,js,output)
+
+
+
+### 6. 动画方式5-列表渲染
+```js
+// html
+<div id="list-demo" class="demo">
+  <button v-on:click="add">Add</button>
+  <button v-on:click="remove">Remove</button>
+  <transition-group name="list" tag="p">
+    <span v-for="item in items" v-bind:key="item" class="list-item">
+      {{ item }}
+    </span>
+  </transition-group>
+</div>
+
+// js
+new Vue({
+  el: '#list-demo',
+  data: {
+    items: [1,2,3,4,5,6,7,8,9],
+    nextNum: 10
+  },
+  methods: {
+    randomIndex: function () {
+      return Math.floor(Math.random() * this.items.length)
+    },
+    add: function () {
+      this.items.splice(this.randomIndex(), 0, this.nextNum++)
+    },
+    remove: function () {
+      this.items.splice(this.randomIndex(), 1)
+    },
+  }
+})
+
+// css
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to
+/* .list-leave-active for below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
+```
+![](./动画/vue动画9.png)
+
+
+
+---
+> 总结
+一般`enter-active` 和 `leave-active` 用来定义过渡时间。
+一般`xxx-enter` 和 `xxx-leave-to` 用来定义起止状态。
