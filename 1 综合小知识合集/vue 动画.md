@@ -67,11 +67,18 @@ new Vue({
 
 ### 5. 动画方式5-多组件过渡动画
 
-[测试案例](https://jsbin.com/xeyemahihe/1/edit?html,css,js,output)
+[测试案例](https://jsbin.com/juqicewike/edit?html,css,js,output)
 
 
 
 ### 6. 动画方式5-列表渲染
+[测试案例](http://js.jirengu.com/fasoxomiqu/1/edit?html,css,output)
+
+要点：
+1. `transition-group` 与一般不一样这里是 group
+2. 里面要是for循环
+
+
 ```js
 // html
 <div id="list-demo" class="demo">
@@ -123,6 +130,14 @@ new Vue({
 
 
 ---
-> 总结
+> 总结：
 一般`enter-active` 和 `leave-active` 用来定义过渡时间。
 一般`xxx-enter` 和 `xxx-leave-to` 用来定义起止状态。
+
+
+1. transition方式
+![](./动画/vue动画10.png)
+![](./动画/vue动画11.png)
+
+2. animation方式
+![](./动画/vue动画12.png)
