@@ -53,3 +53,36 @@ created() {
 
 ### 4. 伪元素加横线
 ![3伪元素加横线.png](./3伪元素加横线.png)
+
+
+### 5. 高度动画
+在`nav vertical`展开时使用了vue 的 js动画钩子
+
+```html
+<transition @enter="enter" @leave="leave" @after-leave="afterLeave">
+  <div class="g-sub-nav-popover" v-show="open" :class="{vertical}">
+    <slot></slot>
+  </div>
+</transition>
+```
+
+```js
+enter(el, done){
+  // 先拿到auto真实高度，存到变量height
+  let {height} = el.getBoundingClientRect()
+  // 高度先为0 -> 然后转换auto，这样高度会有变化，可以响应 transition: height 1s;
+  el.style.height = 0
+  // 这里加一句计算高度的原因是因为浏览器会让多次多样的样式赋值合并
+  // 如果中间进行一个进行元素高度计算的操作，就不会发生合并现象
+  el.getBoundingClientRect()   
+  el.style.height = `${height}px`
+  done();
+},
+leave(el, done) {
+  el.style.height = 0;
+  done()
+},
+afterLeave(el){
+  el.style.height = 'auto';
+},
+```
