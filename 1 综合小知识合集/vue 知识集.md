@@ -163,6 +163,31 @@ props: {
 如果给指令传入函数，直接 `binding.value()` 就能执行该函数，`binding.value`即绑定的值。
 
 
+### 7. 判断某个对象里是否有某个key
+```js
+// let key = 'a'
+// let obj = {a: '1'}
+// key in obj  =>   true
+<span v-if="key in Object"></span>  
+```
+
+### 8. props默认为对象的简写
+```js
+props: {
+  data: {
+    type: Object,
+    default: () => ({})   //默认是对象的话，这里记得加上括号
+  }
+}
+```
+
+### 9. 让自定义组件支持click事件
+```html
+// 自定义组件
+<!-- 再向父组件触发一个click事件即可 -->
+<div @click="$emit('click', $event)"></div>   
+```
+
 
 
 
