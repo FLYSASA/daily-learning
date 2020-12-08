@@ -93,4 +93,80 @@ res.set('Access-Control-Allow-Origin', 'https://null.jsbin.com')
 ```
 
 ## 三. 服务器回传文件对象，并显示在前端
+https://jsbin.com/votejenida/1/edit?html,js,output
+**客户端：**
 ![](./node服务器/file上传到服务端6.png)
+
+**服务端：**
+```js
+app.get('/preview/:key', (req, res)=>{
+  // 获取到前端给的参数后，去发送文件
+  res.sendFile(`yyy/${req.params.key}`, {
+    root: __dirname,
+    headers:{
+      'Content-Type': 'image/jpeg',
+    },
+  }, (error)=>{
+    if(error){
+      res.status(404).send('Not found')
+    }
+  })
+})
+```
+
+
+## 三. 优化服务器
+#### 1. 优化cors跨域:
+![](./node服务器/file上传到服务端7.png)
+
+
+#### 2. 使用heroku作为服务器
+https://www.heroku.com/
+它可以创建一个node服务器。
+
+##### 1. 创建hero账号：
+![](./node服务器/1heroku服务器1.png)
+
+##### 2. 创建app
+![](./node服务器/1heroku服务器2.png)
+命名通过后点击创建app:
+![](./node服务器/1heroku服务器3.png)
+
+##### 3. 关联github
+![](./node服务器/1heroku服务器4.png)
+
+1.将node-server代码上传至github
+![](./node服务器/1heroku服务器5.png)
+
+> 上传至github具体步骤：
+> 1. 将本地node-server文件夹 `git init`
+> 2. 新建.gitignore, 排除掉 node_modules/ 和 uploads/文件夹
+> 3. `git add .`
+> 4. `git commit -m 'init'`
+> 5. `git remote add origin git@github.com:xxx`
+> 6. `git push -u origin master`
+
+2. 在heroko里找到对应仓库连接
+![](./node服务器/1heroku服务器6.png)
+
+
+3. 生成端口号
+因为heroku的端口和我们的端口可能不一致，所以需要更改：
+![](./node服务器/1heroku服务器7.png)
+
+4. heroku部署node-server
+![](./node服务器/1heroku服务器8.png)
+部署失败：
+![](./node服务器/1heroku服务器9.png)
+
+5. 添加指令，重新推送代码
+![](./node服务器/1heroku服务器10.png)
+
+6. heroku重新部署
+![](./node服务器/1heroku服务器11.png)
+点击view, 运行成功：
+![](./node服务器/1heroku服务器12.png)
+
+7. 测试上传成功
+将上面的url地址复制：
+![](./node服务器/1heroku服务器13.png)
