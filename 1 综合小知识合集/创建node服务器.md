@@ -168,5 +168,7 @@ https://www.heroku.com/
 ![](./node服务器/1heroku服务器12.png)
 
 7. 测试上传成功
+
+https://jsbin.com/votejenida/1/edit?html,js,output
 将上面的url地址复制：
 ![](./node服务器/1heroku服务器13.png)
