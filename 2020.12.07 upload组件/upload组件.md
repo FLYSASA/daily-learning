@@ -68,3 +68,21 @@ this.$emit('error', '你错了')
 ![](./1emit同步bug4.png)
 > 好处： 这样能保证数据的更新在父组件处理，不会出现emit合并
 > 坏处： 需要使用者强制监听一个新事件
+
+#### 2. 将所有的文件集中起来，去改变name和状态等
+![](./1emit同步bug5.png)
+![](./1emit同步bug6.png)
+
+
+### 4. 测试用例中的方法重置 sinon-stub
+
+在测试用例中需要模拟http请求，会重置掉post方法：
+![](./2sinon-stub1.png)
+
+这样做为有个弊端，会把别的测试用例的也重置掉
+![](./2sinon-stub2.png)
+![](./2sinon-stub3.png)
+
+引入 stub 解决问题：
+![](./2sinon-stub4.png)
+![](./2sinon-stub5.png)
