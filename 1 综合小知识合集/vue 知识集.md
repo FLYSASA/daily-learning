@@ -203,3 +203,54 @@ props: {
 销毁监听器，需要给绑定的事件命名，这就会引申出this指向的问题，在vue中 this 实际指向并不会改变，但是以防万一还是需要给事件 `.bind(this)`, 不要直接将  `.bind(this)`的函数绑定在监听器上，可以用个变量存起来，因为`.bind(this)`会产生一个新的函数，这就导致无法销毁掉这个函数。
 
 
+### 11. 初步探究vue options
+#### 1.什么是 vue 的 options？
+![](./9vue-options1.png)
+
+经常用到的操作是，将data里的值重置为默认定义的值
+```js
+data(){
+  return {
+    a: 0
+  }
+},
+
+methods: {
+  reset(){
+    this.a = this.$options.data.call(this).a
+  }
+}
+```
+![](./9vue-options2.png)
+
+####  2.这里衍生一个问题 `call、apply、bind` 都可以改变this指向，为什么`call apply`可以，`bind`不行？
+![](./9vue-options3.png)
+
+打印出`options.data`:
+![](./9vue-options4.png)
+
+**这就好解释为什么实用call和apply可以，而bind不行。 因为data是个函数，我们要获取到的值是函数的返回值，需要执行后才会返回。所以需要使用call和apply立即执行一次。**
+
+
+#### 3. `call、apply、bind` 的区别
+https://segmentfault.com/a/1190000018017796
+
+- bind: bind()会创建一个新函数，在调用时设置this关键字为提供的值。
+因为是返回一个新函数，所以需要稍后调用，才会执行。
+- call, apply: 调用 call 和 apply 的对象，必须是一个函数 Function。会立即调用。
+- call和apply区别： call()方法接受的是参数列表, 而apply()方法接受的是一个参数数组。
+
+```js
+function add (a, b) {
+    return a + b;
+}
+
+function sub (a, b) {
+    return a - b;
+}
+
+add.bind(sub, 5, 3); // 这时，并不会返回 8
+add.bind(sub, 5, 3)(); // 调用后，返回 8
+add.call(sub, 5, 3);  // 8
+add.call(sub, [5, 3]);  // 8
+```
