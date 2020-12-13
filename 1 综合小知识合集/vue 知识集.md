@@ -137,6 +137,12 @@ props: {
 </div>
 ```
 
+#### 4.4 `$slots` 和 `$scopedSlots`
+顾名思义：
+> `$slots`: 不带作用域的插槽，即slot上没有传递参数
+> `$scopedSlots`: 带作用域的插槽，即slot上传递了参数
+
+
 ### 5. 组件prop传递规则
 我们给一个组件定义prop时：
 ![3prop](3prop规则.png)
