@@ -15,7 +15,7 @@ v-model其实相当于：
 
 所以组件要支持v-model，需要注意支持这两点：
 > 
-1. :value="value"  绑定value
+1. `:value="value"`  绑定value
 
 2. 监听 input 事件
 ![4](./4.png)

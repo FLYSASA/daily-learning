@@ -1,3 +1,7 @@
+## vue支持karma
+原本的vue单元测试是在node环境下运行的，所以在测试样式等存在很大局限性，改为karma测试，在无头浏览器里运行测试用例。
+
+
 ### 步骤：
 
 [配置参考](https://vue-test-utils.vuejs.org/zh/installation/testing-single-file-components-with-karma.html)
