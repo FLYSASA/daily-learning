@@ -53,3 +53,19 @@ let month = date.getMonth()
 let firstDay = new Date(year, month, 1)
 let lastDay = new Date(year, month + 1, 0)
 ```
+
+### 2. 为了方便修改popover的样式， 将popover定位挂载到 
+![1](1date-picker面板内容设计6.png)
+
+#### ① 拓展popover组件支持元素挂载 
+![1](1date-picker面板内容设计7.png)
+
+#### ② date-picker上添加挂载元素
+![1](1date-picker面板内容设计8.png)
+![1](1date-picker面板内容设计9.png)
+
+挂载成功。
+![1](1date-picker面板内容设计10.png)
+
+跨组件修改popover样式：
+![1](1date-picker面板内容设计11.png)
