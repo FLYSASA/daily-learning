@@ -7,6 +7,38 @@
 
 如何拿到当月的第一天和最后一天？
 
+创建日期常用方法：
+```js
+new Date()    // 没有参数， Tue Dec 15 2020 09:29:46 GMT+0800 (中国标准时间)
+new Date(1607998084742)    // Unix时间戳，表示自1970年1月1日00:00:00 UTC（the Unix epoch）以来的毫秒数，忽略了闰秒。
+new Date('1995-12-17T03:24:00')  // 时间戳字符串
+new Date(2020, 11, 1) // 年月日
+```
+![1](1date-picker面板内容设计13.png)
+
+获取日期常用方法：
+```js 
+let date = new Date()  // 获取当前时间 Tue Dec 15 2020 09:29:46 GMT+0800 (中国标准时间)
+let year = date.getFullYear()  // 获取年
+let month = date.getMonth()  // 获取月，返回0-11, 0代表1月
+let day = date.getDate()    // 获取日 返回 1-31
+let week = date.getDay()    // 获取周 返回 0-6 , 0代表周日
+let seconds = date.getTime()  // 获取毫秒数，表示自1970年1月1日00:00:00 UTC（the Unix epoch）以来的毫秒数，
+```
+![1](1date-picker面板内容设计12.png)
+
+设置日期常用方法：
+```js
+let date = new Date() 
+// 设置月份，介于0-11之间的整数
+date.setMonth(1)    // 返回值是基于 1 January 1970 00:00:00 UTC 开始计算的毫秒数
+
+// 设置年份
+date.setFullYear(2018) // 返回值是基于 1 January 1970 00:00:00 UTC 开始计算的毫秒数
+```
+![1](1date-picker面板内容设计15.png)
+![1](1date-picker面板内容设计16.png)
+
 - 方法一：
 ```js
 let date = new Date()  // 获取到当前时间
@@ -69,3 +101,7 @@ let lastDay = new Date(year, month + 1, 0)
 
 跨组件修改popover样式：
 ![1](1date-picker面板内容设计11.png)
+
+#### ③ 取消点选事件
+![1](1date-picker面板内容设计17.png)
+![1](1date-picker面板内容设计18.png)
