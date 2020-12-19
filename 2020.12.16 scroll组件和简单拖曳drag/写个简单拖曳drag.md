@@ -21,13 +21,11 @@ let startPosition;
 let endPosition;
 
 test.addEventListener('dragstart', (e)=>{
-  test.classList.add('hide')
   let {screenX: x, screenY: y} = e
   startPosition = [x, y]
 })
 
 test.addEventListener('dragend', (e)=>{
-  test.classList.add('hide')
   let {screenX: x, screenY: y} = e
   endPosition = [x, y]
   let deltaX = endPosition[0] - startPosition[0]
@@ -46,9 +44,9 @@ test.addEventListener('dragend', (e)=>{
 #### 移动过程中隐藏原来的
 ```js
 test.addEventListener('dragstart', (e)=>{
-  test.classList.add('hide')
   let {screenX: x, screenY: y} = e
   startPosition = [x, y]
+  // 不加延时会有问题
   setTimeout(()=>{
     test.style.visibility = 'hidden'
   })
@@ -67,7 +65,6 @@ test.addEventListener('dragend', (e)=>{
   let {left, top} = window.getComputedStyle(test)
   test.style.left = parseInt(left) + deltaX + 'px'
   test.style.top = parseInt(top) + deltaY + 'px'
-  test.classList.remove('hide')
   test.style.visibility = 'visible'
 })
 ```
