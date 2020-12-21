@@ -5,7 +5,7 @@
 实现popover组件的时候，要实现一个小功能：
 ![1](./1监听事件关闭popover.png)
 
-```
+```js
 // 初步实现
 <div class="popover" @click="click">
   <div class="content-wrapper"  v-if="visible">
