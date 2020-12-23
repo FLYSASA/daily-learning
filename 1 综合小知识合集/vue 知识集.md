@@ -257,6 +257,20 @@ function sub (a, b) {
 
 add.bind(sub, 5, 3); // 这时，并不会返回 8
 add.bind(sub, 5, 3)(); // 调用后，返回 8
-add.call(sub, 5, 3);  // 8
+add.apply(sub, 5, 3);  // 8
 add.call(sub, [5, 3]);  // 8
 ```
+
+### 12. vue $attrs
+https://cn.vuejs.org/v2/api/#vm-attrs
+```html
+<template>
+  <!-- 属性传递 -->
+  <el-row v-bind="$attrs"></el-row>
+  <!-- 事件传递 -->
+  <el-row v-on="$listeners"></el-row>
+</tempalte>
+```
+`this.$attrs` 包含了父作用域中不作为 prop 被识别 (且获取) 的 attribute 绑定 (class 和 style 除外)。可以用于组件间的prop传递。
+
+`this.$listeners` 包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器。它可以通过 `v-on="$listeners"` 传入内部组件——在创建更高层次的组件时非常有用。
