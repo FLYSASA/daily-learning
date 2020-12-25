@@ -1,5 +1,7 @@
 # vuepress主题搭建
 
-参考文章：https://juejin.cn/post/6844903842375532558
-https://vuepress.vuejs.org/zh/theme/default-theme-config.html#%E4%BE%A7%E8%BE%B9%E6%A0%8F
+[vuepress官方文档](https://vuepress.vuejs.org)
+[vuepress使用教程](https://juejin.cn/post/6844903842375532558)
 
+[代码高亮插件](https://highlightjs.org/)
+[代码折叠功能](https://blog.csdn.net/weixin_39844549/article/details/110477043)
