@@ -81,7 +81,7 @@ base是githubpage的仓库名
 ![](1.目录结构2.png)
 
 ### 2. 主题色修改
-在目录 /docs/.vuepress/styles  下新增 `palette.styl` 文件，内容如下：
+在目录 `/docs/.vuepress/styles`  下新增 `palette.styl` 文件，内容如下：
 ```
 $accentColor = #00abd5 //要修改的主题颜色
 ```
