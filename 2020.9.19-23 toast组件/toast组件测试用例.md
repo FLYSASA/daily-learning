@@ -63,6 +63,7 @@ it('接收 enableHtml ', ()=>{
 ```
 
 ### 3. 验证 position
+```
 it('接收 position ', ()=>{
   const Constructor = Vue.extend(Toast)
   const vm = new Constructor({
@@ -73,3 +74,4 @@ it('接收 position ', ()=>{
   // 判断元素的class里是否包含某个class
   expect(vm.$el.classList.contains('position-bottom').to.eq(true))
 })
+```
