@@ -1,7 +1,7 @@
 # vue动画
 
 ### 1. 动画方式1-css过渡
-[动画示例](https://jsbin.com/cusixapaxa/edit?html,css,js,output)
+[动画示例](https://jsbin.com/pigeketegi/1/edit?html,css,js,output)
 ```js
 <div id="demo">
   <button v-on:click="show = !show">
@@ -40,8 +40,8 @@ new Vue({
 
 
 可以引入动画库`Animate.css`搭配使用：
-[1. animate bootcdn](./https://www.bootcdn.cn/animate.css/)
-[2. animate 官网示例](./https://animate.style/)
+[1. animate bootcdn](https://www.bootcdn.cn/animate.css/)
+[2. animate 官网示例](https://animate.style/)
 
 
 
