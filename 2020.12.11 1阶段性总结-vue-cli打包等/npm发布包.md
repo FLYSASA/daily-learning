@@ -14,17 +14,24 @@
 ![](2npm发布1.png)
 **解决：去掉`package.json`里的 `private: true`**
 ![](2npm发布2.png)
+
 2. 报错：报淘宝源无权限的问题
 ![](2npm发布3.png)
 **解决：设置回淘宝源**
 `npm config set registry https://registry.npmjs.org`
+
 3. 报错：Not-found
 ![](2npm发布4.png)
 ![](2npm发布5.png)
 **解决：登录账号**
 ![](2npm发布6.png)
 
-4. 发布成功
+4. 报错：403 Forbidden
+![](2npm发布8.png)
+**解决：更新版本**
+![](2npm发布9.png)
+
+5. 发布成功
 `npm run publish`
 ![](2npm发布7.png)
 
@@ -40,7 +47,7 @@
 ![](3测试发布的包3.png)
 ![](3测试发布的包4.png)
 
-5. demo使用包报错
+3. demo使用包报错
 这是因为没有在koma-ui里定义入口文件
 ![](3测试发布的包8.png)
 
