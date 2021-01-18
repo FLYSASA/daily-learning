@@ -94,7 +94,7 @@ hash|任和情况都能作为前端路由，路由信息存储在url里|seo不�
 history|后端将所有前端路由都渲染同一页面，路由信息存储在url里|不支持IE8
 memory|将路由信息存放到localStorage里等，适合非浏览器|单机路由
 
-hash模式的实现，是基于 `history.pushState` API来完成 URL 跳转而无须重新加载页面。
+history模式的实现，是基于 `history.pushState` API来完成 URL 跳转而无须重新加载页面。
 
 hash举例：
 https://codesandbox.io/s/oqjvqm6w05
