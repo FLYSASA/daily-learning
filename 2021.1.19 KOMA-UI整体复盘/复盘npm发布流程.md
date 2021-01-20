@@ -49,5 +49,5 @@
 ![](../2020.12.11阶段性总结-vue-cli打包等/2npm发布9.png)
 
 5. 发布成功
-`npm ublish`
+`npm publish`
 ![](../2020.12.11阶段性总结-vue-cli打包等/2npm发布7.png)
