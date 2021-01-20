@@ -11,6 +11,8 @@ node_js:
 addons:
 chrome: stable
 sudo: required
+before_install:
+  - npm i -g npm  // node 9下老是报装包问题，所以追加了这句
 before_script:
   - "sudo chown root /opt/google/chrome/chrome-sandbox"
   - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"

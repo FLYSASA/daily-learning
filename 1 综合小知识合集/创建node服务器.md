@@ -15,6 +15,8 @@ npm i express multer cors
 #### 3. 新建`index.js`文件
 ![](./node服务器/初始化3.png)
 
+执行`node index.js` 启动服务器，
+
 访问： `http://127.0.0.1:3000/` 成功。
 ![](./node服务器/初始化4.png)
 
