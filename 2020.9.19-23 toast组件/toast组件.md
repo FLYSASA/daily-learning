@@ -5,7 +5,7 @@
 比如： `import Vue2 from 'Vue'` 所以此时引入就是失效的。
 
 这里引申出Vue插件的使用方式：
-[插件的作用就是为vue添加全局功能]('https://cn.vuejs.org/v2/guide/plugins.html')
+[插件的作用就是为vue添加全局功能](https://cn.vuejs.org/v2/guide/plugins.html)
 ![1](./1插件.png)
 
 

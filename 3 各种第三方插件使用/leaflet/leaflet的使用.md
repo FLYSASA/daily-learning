@@ -186,7 +186,9 @@ import leftMapView from '@/pages/pdm/components/leaflet-map-view';
 const div = document.createElement('div')
 document.body.appendChild(div)
 const Constructor = Vue.extend(leftMapView)
-const vm = new Contructor({}).$mount(div)
+const vm = new Contructor({
+  propsData: {}
+}).$mount(div)
 
 
 // 最后记得找个时机(比如关闭弹窗时)清除掉新增的div，以免重复累加，影响页面性能

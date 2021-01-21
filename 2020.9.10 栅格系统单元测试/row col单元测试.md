@@ -20,8 +20,7 @@
 const div = document.createElement('div')  
 const child = document.createElement('child') // created 这两步是同步的
 div.appendChild(child)    // mounted 这一步是异步的
-document.body.apendChild(div)   // mounted 这一步是异步
-的       
+document.body.apendChild(div)   // mounted 这一步是异步的       
 console.log(div.outerHTML)  // 这个是同步的会在异步之前执行
 ```
 
