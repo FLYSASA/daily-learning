@@ -1,4 +1,5 @@
-### 1. 使用设计
+# Tas组件
+### 1. Tabs设计
 ![1](./1tabs组件使用设计.png)
 
 
@@ -15,7 +16,7 @@ this.$emit('update:selected', newtab)  // 注意这里的update:tab 不要使用
 
 // 父组件
 :selected="selectedTab"
-@update:tab = "selectedTab = $event"
+@update:selected = "selectedTab = $event"
 
 // Vue官方提供了一个语法糖，使用 `.sync` 即可达到上面的效果
 // 父组件
@@ -40,10 +41,10 @@ tabs使用场景是，点击一个item会通知其他组件自身状态的更新
 
 
 ### 5. 在flex中如何让设置单独靠左
-在slot上加class是无效的
+在slot上加class是无效的，需要外部包裹div加上class;
 ![5](./6.在slot上加class是无效的.png)
 
-给个 `margin-left: auto;` 即可
+外部div给个 `margin-left: auto;` 即可
 
 ### 6. 如何获取相对parent元素的偏移值？
 当使用getBoundingClientRect只能获取到相对视窗的left偏移值，但是难免会包裹一层含padding的容器。
