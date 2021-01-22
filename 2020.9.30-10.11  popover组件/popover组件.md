@@ -43,7 +43,7 @@ click(){
 },
 
 // 第三次尝试失败
-// 效果： 点击按钮首次会出现popover，再点击外面会关掉，但是再次点按钮击无反应
+// 效果： 点击按钮首次会出现popover，再点击外面会关掉，但是再次点击按钮无反应
 // 失败原因： 因为errorHandler bind.(this) 后会变成一个新的函数， 所以清除errorHandler时，不是同一个函数
 click(){
   this.visible = !this.visible
