@@ -1,5 +1,5 @@
 # koma-ui
-此篇文章主要用于koma-ui搭建过程中的整体复盘。
+此篇文章主要用于koma-ui搭建过程中的项目复盘以及源码解析。
 
 ### 1. 初始化项目
 ```bash
@@ -1908,4 +1908,198 @@ export default {
   }
 }
 </style>
+```
+
+### 18. Table组件
+table组件就比较复杂了，需要考虑列的渲染，操作列，固定表头等。
+核心思路：
+> table组件是基于原生table的，所以要考虑th表头 td行内容。这两个都需要一个数组columns遍历去绑定数据源，所以column需要提供基本属性，如： `text(列名)、prop(列的标识)、width(列宽)`。所以需要考虑的重点是如何构造这样的columns。
+
+columns和我们看到的列的是一一对应的，有多少koma-table-column，columns就有多少元素。
+
+```js
+// table.vue 
+mounted() {
+  // 我们需要知道如果slot内容有作用域，$slots是不会统计到的，如<template #action="scope"></template>
+  // 利用这个特点可以找出所有插槽内容为k-table-column的
+  // 因为会有tag undefined的无意义值，将其过滤掉
+  const komaTableColumns = this.$slots.default.filter(i => i.tag)
+  this.columns = komaTableColumns.map(node => {
+    // 精髓，也是使用k-table-column中转的原因，方便拿到prop
+    // 需要在k-table-column 组件里定义该prop才能拿到
+    let { text, prop, width } = node.componentsOptions.propsData
+    // 如果用户自己写了dom，可以直接拿到对应的渲染表达式做渲染
+    let render = node.data.scopedSlots &&  node.data.scopedSlots.default
+    return { text, prop, width, render}
+  })
+}
+```
+
+columns 拿到后，就可以渲染html了：
+```js
+// table.vue html骨架
+<table class="koma-table" ref="table">
+  <thead>
+    <tr>
+      <th :style="{width: `${column.width}px`}" v-for="(column, idx) in columns" :key="column.prop">
+        <div class="kama-table-name">
+          {{column.text}}
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <template v-for="(item, index) in dataSource">
+      <!-- 主体内容 -->
+      <tr :key="item.id">
+        <template v-for="column in columns">
+          <td :style="{width: `${column.width}px`}" :key="column.prop">
+            <template v-if="column.render">
+              <!-- 使用render的方式，可以将孙组件里的html直接渲染到父组件上，并且可以通过传递参数到slot-scope上 -->
+              <vnodes :vnodes="column.render({row: item})"></vnodes>
+            </template>
+            <template v-else>
+              {{item[column.prop]}}
+            </template>
+          </td>
+        </template>
+      </tr>
+    </template>
+  </tbody>
+</table>
+
+export default {
+  name: 'KomaTable',
+  components: {
+    // 我有特殊的渲染技巧
+    Vnodes: {
+      functional: true,
+      render: (h, ctx) => ctx.props.vnodes
+    }
+  }
+}
+```
+
+<font color="red">实现固定表头：</font>
+如何做到滚动内容，而保证表头固定不动？
+核心思路：
+> 首先浅拷贝table壳，还真是壳，table里的内容（如tbody,thead）全部不要。然后将原来table的thead取出塞到拷贝的table里，然后将table塞到wrapper里。
+
+代码如下：
+```js
+mounted() {
+  this.$nextTick(() => {
+    this.fixedHeader()
+  })
+},
+beforeDestroy() {
+  this.cloneTable.remove()
+},
+methods: {
+  fixedHeader() {
+    let cloneTable = this.$refs.table.cloneNode(false)
+    this.cloneTable = cloneTable
+    cloneTable.classList.add('clone-table')
+    // this.$refs.table.children: HTMLCollection: [thead, tbody] 
+    let thead = this.$refs.table.children[0]
+    let {height} = thead.getBoundingClientRect()
+    // 因为多了一个表格，所以需要将原来的表格高度减掉新的表格高，保证总体高度不变
+    this.$refs.tableWrapper.style.marginTop = height + 'px';
+    this.$refs.tableWrapper.style.height = this.height - height + 'px';
+    cloneTable.appendChild(thead)
+    this.$refs.wrapper.appendChild(cloneTable)
+  }
+}
+```
+
+勾选功能：
+```js
+// table.vue html骨架
+<table class="koma-table" ref="table">
+  <thead>
+    <tr>
+    <th v-if="checkable" :style="{width: '50px'}" class="table-center">
+      <input class="pointer" ref="allCheckBox" type="checkbox" @change="onChangeAllItems" :checked="isAllItemSelected">
+    </th>
+      <th :style="{width: `${column.width}px`}" v-for="(column, idx) in columns" :key="column.prop">
+        <div class="kama-table-name">
+          {{column.text}}
+        </div>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <template v-for="(item, index) in dataSource">
+      <tr :key="item.id">
+        <td v-if="checkable" :style="{width: '50px'}" class="table-center">
+          <!-- 这里不用 selectedItems.indexOf(item) 是因为， selectedItems里的对象都是经过深拷贝追加的，已经不再是原来的元素，他们是不等的 -->
+          <input type="checkbox"
+          :checked="inselectedItems(item)"
+          @change="onChangeItem(item, index, $event)">
+        </td>
+        <template v-for="column in columns">
+          <td :style="{width: `${column.width}px`}" :key="column.prop">
+            <template v-if="column.render">
+              <vnodes :vnodes="column.render({row: item})"></vnodes>
+            </template>
+            <template v-else>
+              {{item[column.prop]}}
+            </template>
+          </td>
+        </template>
+      </tr>
+    </template>
+  </tbody>
+</table>
+
+computed: {
+  isAllItemSelected() {
+    const a = this.dataSource.map(i => i.id).sort()   
+    const b = this.selectedItems.map(i => i.id).sort()
+    if(a.length !== b.length) {
+      return false
+    }
+    let equal = true
+    for(let i = 0; i < a.length; i++){
+      if(a[i] !== b[i]){
+        equal = false;
+        break;
+      }
+    }
+    return equal;
+  }
+},
+watch: {
+  selectedItems(val) {
+    // 半选中态
+    if(val.length > 0 && val.length < this.dataSource.length) {
+      this.$refs['allCheckBox'].indeterminate = true
+    } else if (val.length === this.dataSource.length){
+      this.$refs['allCheckBox'].indeterminate = false
+    } else {
+      this.$refs['allCheckBox'].indeterminate = false
+    }
+  }
+}
+methods: {
+  inselectedItems(item){
+    return this.selectedItems.filter(i => i.id === item.id).length > 0
+  },
+  onChangeAllItems(e){
+    let selected = e.target.checked;
+    // 依然是单向数据流的方式
+    this.$emit('update:selectedItems', selected ? this.dataSource : [])
+  },
+  onChangeItem(item, index, e){
+    let selected = e.target.checked;
+    let copy = JSON.parse(JSON.stringify(this.selectedItems))
+    if(selected){
+      copy.push(item)
+    }else{
+      // 这个就很巧妙了，不是使用的splice而是用的filter
+      copy = copy.filter(i => i.id !== item.id)
+    }
+    this.$emit('update:selectedItems', copy)
+  },
+}
 ```
