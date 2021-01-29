@@ -31,14 +31,22 @@ let seconds = date.getTime()  // 获取毫秒数，表示自1970年1月1日00:00
 ```js
 let date = new Date() 
 // 设置月份，介于0-11之间的整数
-date.setMonth(1)    // 返回值是基于 1 January 1970 00:00:00 UTC 开始计算的毫秒数
+date.setMonth(1)    // 返回值是基于 1.1.1970  00:00:00 UTC 开始计算的毫秒数
 
 // 设置年份
-date.setFullYear(2018) // 返回值是基于 1 January 1970 00:00:00 UTC 开始计算的毫秒数
-```
-![1](1date-picker面板内容设计15.png)
-![1](1date-picker面板内容设计16.png)
+date.setFullYear(2018) // 返回值是基于 1.1.1970 00:00:00 UTC 开始计算的毫秒数
 
+// 设置日
+date.setDate(24)
+```
+月：
+![1](1date-picker面板内容设计15.png)
+年：
+![1](1date-picker面板内容设计16.png)
+日：
+![1](1date-picker面板内容设计19.png)
+
+#### 获取当月第一天和最后一天：
 - 方法一：
 ```js
 let date = new Date()  // 获取到当前时间

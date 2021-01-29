@@ -32,7 +32,7 @@
 ![](2npm发布9.png)
 
 5. 发布成功
-`npm ublish`
+`npm publish`
 ![](2npm发布7.png)
 
 

@@ -2252,7 +2252,7 @@ export default {
 <template>
   <!-- wrapper加height，占位避免抖动 -->
   <div class="koma-sticky-wrapper" ref="wrapper" :style="{ height }">
-    <div class="koma-sticky" :class="computedClasses" :style="{ top, left, width,  }">
+    <div class="koma-sticky" :class="computedClasses" :style="{ top, left, width }">
       <slot></slot>
     </div>
   </div>
@@ -2333,4 +2333,37 @@ export default {
   }
 }
 </style>
+```
+
+### 21. DatePicker组件
+核心思路：
+![](../2020.12.14date-picker组件/1date-picker面板内容设计1.png)
+
+> 其实我们只需要确定第一排第一个的日期，后面的日期就可以通过遍历42次，逐渐累加得到。第一排的日期计算，可以通过计算当月的第一天的星期数，然后往回推几天得到。 如当月第一天星期是星期三，那么往回再推2天即可。
+
+```js
+data() {
+  let [ year, month ] = helper.getYearMonthDate(this.value || new Date())
+  return {
+    mode: 'day',
+    helper,
+    weekdays: ['一', '二', '三', '四','五','六','日'],
+    dateWrapper: null,
+    // 要展示的日期，默认和value 同年同月, 没有value就展示当年当月
+    display: { year, month },
+  };
+},
+computed: {
+  visibleDays(){
+    let first = new Date(this.display.year, this.display.month, 1)
+    let arr = []
+    // getDate() 返回1-31的整数值,  getDay() 返回 0-6 0代表星期日
+    let weekDay = first.getDay()  // 算出当月第一天是星期几
+    let x = first - (weekDay === 0 ? 6 : weekDay - 1) * 3600 * 24 * 1000  // 计算第一排第一个的天数
+    for (let i = 0; i < 42; i++) {
+      arr.push(new Date(x + i*3600*24*1000)) // 从第一天每次加一天
+    }
+    return arr;
+  }
+}
 ```
