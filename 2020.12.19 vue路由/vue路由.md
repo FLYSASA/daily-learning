@@ -96,8 +96,73 @@ memory|将路由信息存放到localStorage里等，适合非浏览器|单机路
 
 history模式的实现，是基于 `history.pushState` API来完成 URL 跳转而无须重新加载页面。
 
-hash举例：
+history模式举例：
 https://codesandbox.io/s/oqjvqm6w05
+```html
+<a class="link" href="/1">go to 1</a> 
+<a class="link" href="/2">go to 2</a>
+<a class="link" href="/3">go to 3</a> 
+<a class="link" href="/4">go to 4</a>
+<div id="app"></div>
+
+<div id="div404" style="display: none;">你要找的内容被外星人带走了</div>
+```
+```js
+const app = document.querySelector("#app");
+const div1 = document.createElement("div");
+div1.innerHTML = "1";
+const div2 = document.createElement("div");
+div2.innerHTML = "2";
+const div3 = document.createElement("div");
+div3.innerHTML = "3";
+const div4 = document.createElement("div");
+div4.innerHTML = "4";
+const routeTable = {
+  "/1": div1,
+  "/2": div2,
+  "/3": div3,
+  "/4": div4
+};
+
+function route(container) {
+  let number = window.location.pathname;
+  console.log("number: " + number);
+
+  if (number === "/") {
+    number = "/1";
+  }
+
+  // 获取界面
+  let div = routeTable[number.toString()];
+  if (!div) {
+    div = document.querySelector("#div404");
+  }
+  div.style.display = "block";
+
+  // 展示界面
+  container.innerHTML = "";
+  container.appendChild(div);
+}
+
+const allA = document.querySelectorAll("a.link");
+
+for (let a of allA) {
+  a.addEventListener("click", e => {
+    e.preventDefault();
+    const href = a.getAttribute("href");
+    window.history.pushState(null, `page ${href}`, href);
+    // 通知
+    onStateChange(href);
+  });
+}
+
+route(app);
+
+function onStateChange() {
+  console.log("state 变了");
+  route(app);
+}
+```
 
 获取路由参数：
 > `hash模式: windown.location.hash.substr(1)`  // 获取#后面的内容
