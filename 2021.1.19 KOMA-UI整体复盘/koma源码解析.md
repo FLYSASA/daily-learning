@@ -2103,3 +2103,142 @@ methods: {
   },
 }
 ```
+
+### 19. Uploader组件
+核心思路：
+> uploder需要一个trigger触发器，然后通过监听trigger的点击事件，创建一个隐藏的type为file的input，监听该 input 的 change 事件来开始uploadFile操作。
+
+```js
+<template>
+  <div class="koma-uploader">
+    <div @click="onClickUpload" ref="trigger">
+      <slot></slot>
+    </div>
+    <div ref="temp" style="display: none;"></div> 
+  </div>
+</template>
+
+<script>
+export default {
+  methods: {
+    onClickUpload() {
+      let input = this.createInput()
+      input.addEventListener('change', e => {
+        let rawFiles = input.files
+        this.uploadFile(rawFiles)
+        input.remove()
+      })
+    },
+    createInput() {
+      this.$refs.temp.innerHtml = ''
+      let input = document.createElement('input')
+      input.type = 'file'
+      input.accept = this.accept
+      input.multiple = this.multiple
+      this.$refs.temp.appendChild(input)
+      return input;
+    },
+    uploadFile(rawFiles) {
+      let newName = [];
+      for(let i=0; i < rawFiles.length; i++){
+        let rawFile = rawFiles[i]
+        let {name} = rawFile
+        // 重复文件名称叠加
+        let newName = this.generateName(name)
+        // 不改变真实的rawFiles， 将新的name用数组存起来
+        newNames[i] = newName
+      }
+      if(!this.beforeUploadFile(rawFiles, newNames)) {return;}
+      // 通过上传前的验证后，开始上传
+      for(let i=0; i<rawFiles.length; i++){
+        let rawFile = rawFiles[i]
+        let {name, type, size} = rawFile
+        let newName = newNames[i]
+
+        let formData = new FormData()
+        formData.append(this.name, rawFile)
+        this.doUploadFile(formData, 
+          // success
+          (res)=>{
+            // imgUrl是用户回传的
+            this.imgUrl = this.parseResponse(res)
+            // 传newName是为了找到之前那个文件以更新文件状态
+            this.afterUploadFile(newName, this.imgUrl)
+          }, 
+          // error
+          (xhr)=>{
+            this.uploadError(newName, xhr)
+          }
+        )
+      }
+    },
+    // 上传失败
+    uploadError(newName, xhr){
+      let copyFileList = JSON.parse(JSON.stringify(this.fileList))
+      copyFileList.some((i)=>{
+        if(i.name === newName){
+          i.status = 'fail'
+          return true;
+        }
+      })
+      this.$emit('update:fileList', copyFileList)
+      let error = ''
+      if(xhr.status === 0) {
+        error = '网络无法连接'
+      }
+      this.$emit('error', error)
+    },
+    // 上传中
+    doUploadFile(formData, success, fail) {
+      http[this.method.toLowerCase()](this.action, { success, fail, formData })
+    },
+    // 上传成功后
+    afterUploadFile(newName, url){
+      // 找到上传成功之前的那个file，更新它的状态
+      let copyFileList = JSON.parse(JSON.stringify(this.fileList))
+      copyFileList.some((i)=>{
+        if(i.name === newName){
+          i.url = url
+          i.status = 'success'
+          return true;
+        }
+      })
+      this.$emit('update:fileList', copyFileList)
+      this.$emit('uploaded')
+    },
+    // 上传前
+    // rawFiles 注意这里的这个是个文件对象需要转一下
+    beforeUploadFile(rawFiles, newNames) {
+      rawFiles = Array.from(rawFiles)
+      for(let i=0; i<rawFiles.length; i++){
+        let {type, size} = rawFiles[i]
+        if(size > this.sizeLimit){
+          this.$emit('error', '文件大于2MB')
+          return false;
+        }
+      }
+      // 在上传前给每个文件加入name和loading状态
+      let arr = rawFiles.map((rawFile, index)=> {
+        return {
+          name: newNames[index], 
+          type: rawFile.type, 
+          size: rawFile.size, 
+          status: 'uploading'
+        }})
+      this.$emit('update:fileList', [...this.fileList, ...arr])
+      return true;
+    }
+    generateName(name) {
+      // 简单的循环判断已上传的文件中是否有重复名字
+      while(this.fileList.filter(f=> f.name === name).length > 0) {
+        let dotIndex = name.lastIndexOf('.')
+        let nameWithoutExtension = name.substring(0, dotIndex)
+        let extension = name.substring(dotIndex)
+        name = nameWithoutExtension + '(1)' + extension
+      }
+      return name;
+    },
+  }
+}
+</script>
+```
