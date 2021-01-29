@@ -175,5 +175,5 @@ test.addEventListener('mouseup', (e)=>{
 
 > 1. 注意移动过快的话会丢失目标。
 解决办法： mousemove时改为监听document
-> 2. 使用 transform时候，移动过程中需要每次讲startPosition重置，因为transform是个累计的过程，需要不断相对上次校正位置。
+> 2. 使用 transform时候，移动过程中需要每次将startPosition重置，因为transform是个累计的过程，需要不断相对上次校正位置。
 

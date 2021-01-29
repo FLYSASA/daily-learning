@@ -2367,3 +2367,12 @@ computed: {
   }
 }
 ```
+
+### 22. scroll滚动条
+核心思路：
+ 实现滚动条，首先需要实现拖曳。拖曳这里就不再介绍了，可以看我之前写的如何实现拖曳。
+##### 具体实现：
+
+1. 确定好bar的高度， 其实就是 `childHeight(内容的真实高度) / parentHeight(内容器的高) = parentHeight / barHeight(bar高度) `
+
+2. 确定好bar的位置，`contentY(内容滚动距离) / parentHeight(内容器的高) = scrollBarY(滚动条滚动距离) / barHeight(滚动条高度)`
