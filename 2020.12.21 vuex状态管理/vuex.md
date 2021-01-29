@@ -195,7 +195,7 @@ new Vue({
             state.count++
           },
           // 额外的参数
-          incrementN (state) {
+          increment (state, n) {
             state.count += n
           }
         }
