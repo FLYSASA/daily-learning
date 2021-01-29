@@ -2242,3 +2242,95 @@ export default {
 }
 </script>
 ```
+
+### 20. Sticky组件
+核心思路：
+> 如果元素即将滚出视窗范围的临界位置，即添加一个sticky的class，进行fixed定位。
+
+如何判断页面滚动是否达到元素的临界位置？
+```js
+<template>
+  <!-- wrapper加height，占位避免抖动 -->
+  <div class="koma-sticky-wrapper" ref="wrapper" :style="{ height }">
+    <div class="koma-sticky" :class="computedClasses" :style="{ top, left, width,  }">
+      <slot></slot>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'KomaSticky',
+  components: {},
+  props: {
+    distance: {
+      type: Number,
+      default: 0
+    }
+  },
+  data() {
+    return {
+      sticky: false,
+      top: null,
+      left: null,
+      width: null,
+      height: null,
+      timerId: null,
+      offsetTop: null,  // 元素距离页面顶部的位置，由初始位置决定
+    };
+  },
+  computed:{
+    computedClasses () {
+      return {
+        sticky: this.sticky
+      }
+    }
+  },
+  mounted() {
+    // 1. 获取元素至页面顶部的位置，注意页面顶部非到窗口的位置
+    this.getOffsetTop()
+  },
+  beforeDestroy(){
+    window.removeEventListener('scroll', this.windowScrollHandler)
+  },
+  methods: {
+    getOffsetTop() {
+      let { top } = this.$refs.wrapper.getBoundingClientRect()
+      this.offsetTop = top + window.scrollY
+
+      this.windowScrollHandler = this._windowScrollHandler.bind(this)
+      // 2. 监听滚动事件
+      window.addEventListener('scroll', this.windowScrollHandler)
+    },
+    _windowScrollHandler() {
+      let stickyIt = () => {
+        if(window.scrollY + this.distance > this.offsetTop) {
+          // 改变状态时才去获取高度，保证图片加载时，时间过长获取高度不准确的问题
+          let { height, left, width } = this.$refs.wrapper.getBoundingClientRect()
+          this.height = height + 'px'
+          this.left = left + 'px'
+          this.width = width + 'px'
+          this.top = this.distance + 'px'
+          this.sticky = true
+        } else {
+          this.height = null
+            this.left = null
+            this.width = null
+            this.top = null
+            this.sticky = false
+        }
+      }
+      stickyIt();
+    }
+  }
+}
+</script>
+<style lang='less' scoped>
+.koma-sticky {
+  &.sticky {
+    position: fixed;
+    z-index: 9999;
+  }
+}
+</style>
+```
