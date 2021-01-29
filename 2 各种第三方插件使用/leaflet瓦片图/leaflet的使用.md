@@ -198,3 +198,36 @@ document.body.removeChild(div)
 最终预览效果：
 ![](3.png)
 
+## 4.服务端代码
+```js
+const express = require('express')
+// 使用multer接收文件
+const multer = require('multer')
+// cors跨域
+const cors = require('cors')
+// 将接收的文件放到attachment目录下，没有的话会自动新建一个attachment文件夹
+const upload = multer({ dest: 'attachment/' })
+
+const app = express()
+
+app.options('upload', cors())
+
+
+app.get('/preview/:z/:x/:y', cors(), (req, res)=>{
+  // 获取到前端给的参数后，去发送文件
+  const {z, x, y} = req.params
+  res.sendFile(`Model/${z}/${x}/${y}`, {
+    root: __dirname,
+    headers:{
+      'Content-Type': 'image/jpeg',
+    },
+  }, (error)=>{
+    if(error){
+      res.status(404).send('Not found')
+    }
+  })
+})
+
+var port = process.env.PORT || 3000;
+app.listen(port)
+```
