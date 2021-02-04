@@ -92,7 +92,7 @@ nextTick当前阶段完成之后调用。
 #### ② Chrome
 只有两个阶段，“一会儿”（宏任务）和“马上”（微任务）。
 
-“宏任务” 指的便是 “any pending JavaScript tasks”，即 事件循环中所有等待执行的JavaScript任务；那什么任务才需要等待执行呢？显然是队列中的任务，所以我更倾向于 宏任务 指的是队列中的任务。
+“宏任务” 指的便是 “any pending JavaScript tasks”，即 事件循环中所有等待执行的JavaScript任务；那什么任务才需要等待执行呢？显然是队列中的任务，宏任务 指的是队列中的任务。
 
 ```js
 // chrome里不同api所处阶段
