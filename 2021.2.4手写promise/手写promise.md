@@ -1,6 +1,6 @@
 # 手写promise
 
-##1. promise基本使用：
+## 1. promise基本使用：
 ```js
 let p = new Promise((resolve, reject) => {
   // dosth...
