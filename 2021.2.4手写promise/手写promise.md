@@ -90,7 +90,7 @@ class Promise {
       setTimeout(()=>{
         this.successQueue.forEach(s => {
           // 可能会出现不传的情况，所以判断一下
-          if(s) => {
+          if(s) {
             s(data)
           }
         })

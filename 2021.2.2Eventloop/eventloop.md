@@ -16,7 +16,7 @@ EventLoop事件循环的阶段：
 ```js
 // 阶段执行顺序及执行内容 中间省略了部分步骤
 
-timers:  执行 setTimeout，setInterval 回调函数
+timers: 执行 setTimeout，setInterval 回调函数
 ↓
 poll: 等待阶段
 ↓
@@ -32,13 +32,13 @@ check: 执行 setImmediate 的回调函数
 ```js
 // node环境中
 
-setTimeout(()=> { console.log(1)}, 0)
-setImmediate(()=> { console.log(2)})
+setTimeout(()=> { console.log(1) }, 0)
+setImmediate(()=> { console.log(2) })
 // 打印结果是不固定的，有可能先1后2，也可能是先2后1。
 
 setTimeout(()=>{
-  setTimeout(()=> { console.log(1)}, 0)
-  setImmediate(()=> { console.log(2)})
+  setTimeout(()=> { console.log(1) }, 0)
+  setImmediate(()=> { console.log(2) })
 }, 1000)
 // 上面执行加了延时，所以肯定eventLoop会先启动，所以check里的setImmediate会先执行
 // 所以打印结果固定 2,1
@@ -71,7 +71,7 @@ nextTick就看隔它最近的处在什么阶段，它就在该阶段完成之后
 ![](2eventLoop解题步骤.png)
 
 #### 2. 开始运行eventLoop
-默认从poll阶段开始运行，然后到check阶段执行 f1, f1里有setTimeout放置到timers。 进入timers阶段后，首先执f2，然后f3，然后进入poll阶段等待，再次进入check阶段执行f4,
+默认从 **poll阶段** 开始运行，然后到check阶段执行 f1, f1里有setTimeout放置到timers。 进入timers阶段后，首先执f2，然后f3，然后进入poll阶段等待，再次进入check阶段执行f4,
 所以打印顺序是：`setImmediate1 setTimeout2 setTimeout1 setImmediate2`
 ![](2eventLoop解题步骤2.png)
 
@@ -90,9 +90,9 @@ nextTick当前阶段完成之后调用。
 ```
 
 #### ② Chrome
-只有两个阶段，“一会儿”（宏任务）和“马上”（微任务）。
+只有两个阶段，“一会儿”（宏任务）和 “马上”（微任务）。
 
-“宏任务” 指的便是 “any pending JavaScript tasks”，即 事件循环中所有等待执行的JavaScript任务；那什么任务才需要等待执行呢？显然是队列中的任务，宏任务 指的是队列中的任务。
+“宏任务” 指的便是 “any pending JavaScript tasks”，即 事件循环中所有等待执行的JavaScript任务；那什么任务才需要等待执行呢？显然是队列中的任务，宏任务 指的是 **队列中的任务**。
 
 ```js
 // chrome里不同api所处阶段

@@ -39,5 +39,7 @@ webpack运行的生命周期中会广播许多事件，Plugin可以监听这些�
 - **commons-chunk-plugin**: 提取公共代码
 - **uglifyjs-webpack-plugin**: 通过 uglifyES 压缩 ES6 代码
 
-#### 4. 如何按需加载代码？
-Vue UI组件库按需加载，为了快速开发前端项目，经常引入
+#### 4. 如何在vue项目中实现按需加载？
+Vue UI组件库按需加载，为了快速开发前端项目，经常引入现成的UI组件库如ElementUI、iView等，整个引入的体积是很庞大的。通常我们引入常用的几个组件就可以了。
+
+很多组件库以及提供了现成的解决方案，如 Element 的 `babel-plugin-component` 和 AntDesign 的 `babel-plugin-import` 安装插件后，在 `.babelrc` 配置中或`babel-loader`的参数中进行设置，即可实现组件的按需加载。
