@@ -43,3 +43,9 @@ webpack运行的生命周期中会广播许多事件，Plugin可以监听这些�
 Vue UI组件库按需加载，为了快速开发前端项目，经常引入现成的UI组件库如ElementUI、iView等，整个引入的体积是很庞大的。通常我们引入常用的几个组件就可以了。
 
 很多组件库以及提供了现成的解决方案，如 Element 的 `babel-plugin-component` 和 AntDesign 的 `babel-plugin-import` 安装插件后，在 `.babelrc` 配置中或`babel-loader`的参数中进行设置，即可实现组件的按需加载。
+
+
+#### 5. webpack如何优化打包速度
+https://www.cnblogs.com/imwtr/p/7801973.html
+happypack(多线程): HappyPack会采用多进程去打包构建。
+dll: 动态链接库。把复用性较高的第三方模块打包到动态链接库中，在不升级这些库的情况下，动态库不需要重新打包，每次构建只重新打包业务代码。

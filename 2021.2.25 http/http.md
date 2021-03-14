@@ -126,3 +126,50 @@ DNS作用是将输入的域名 转为对应的 ip, 方便机器识别
     - 解析内容
     - 绘制图像
 
+
+### 9. http缓存
+HTTP缓存有利于web性能优化, 有三种：
+
+#### ① Cache-Control
+```
+cache-control: max-age=31536000  // 可以通过在请求头中max-age的数值来设置缓存时间
+```
+
+#### ① Expires
+expire是以前用来控制缓存http头，Cache-Control是新版的api。
+现在首选 Cache-Control。
+如果 Cache-Control设置了max-age，则 Expires 头会被忽略
+
+设置格式：
+```
+Expires: Wed, 21 Oct 2015 07:28:00 GMT // 响应头包含日期/时间， 即在此时候之后，响应过期。
+```
+
+**注意： 因为过期标准的时间用的是本地时间，所以不靠谱，所以要游侠使用Cache-Control代替Expires**
+
+区别： 
+1. Cache-Control 设置事件长度。
+2. Expires设置时间点。
+
+
+#### ③ Etag
+客户端请求文件时，服务器端会在响应头里返回 ETag值（md5计算）。下次请求文件的时候，浏览器会把上一次响应的ETag放到`If-None-Match`里，如果请求和响应的MD5一样，说明不需要重新下载这个js文件。
+说明文件没改过，那么返回304。
+
+> 304 Not Modified：
+HTTP 304 未改变说明无需再次传输请求的内容，也就是说可以使用缓存的内容。
+
+**ETag与 Cache-Control的区别:**
+1. 缓存（Cache-Control）的，所以直接不发请求
+2. ETag有请求也有响应，只不过如果MD5一样，那么就不下载响应体
+
+
+#### ④ Last-Modified
+The Last-Modified  是一个响应首部，其中包含源头服务器认定的资源做出修改的日期及时间。 由于精确度比  ETag 要低，所以这是一个备用机制。
+```
+Last-Modified: Wed, 21 Oct 2015 07:28:00 GMT
+```
+
+
+
+
